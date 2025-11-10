@@ -56,6 +56,41 @@ app.get('/movies/:id', (req, res) => {
   res.json(movie);
 });
 
+// E. PUT /movies/:id - update a movie by ID
+app.put('/movies/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = movies.findIndex(movie => movie.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Movie not found' });
+  }
+
+  const updatedMovie = {
+    id,
+    title: req.body.title,
+    director: req.body.director,
+    year: req.body.year
+  };
+
+  movies[index] = updatedMovie;
+  res.json(updatedMovie);
+});
+
+// F. DELETE /movies/:id - delete a movie by ID
+app.delete('/movies/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = movies.findIndex(movie => movie.id === id);
+
+  if (index === -1) {
+    return res.status(404).json({ error: 'Movie not found' });
+  }
+
+  const deletedMovie = movies.splice(index, 1)[0]; // remove from array
+  res.json({ message: 'Movie deleted successfully', deleted: deletedMovie });
+});
+
+
+
 // ================================
 
 // 5. Start the server
