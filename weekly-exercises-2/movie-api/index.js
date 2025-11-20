@@ -11,11 +11,13 @@ let movies = [
   { id: 3, title: "Parasite", director: "Bong Joon-ho", year: 2019 }
 ];
 
-// Helper: validate movie
-function isValidMovie({ title, director, year }) {
+// Ensure title, director, and year are provided when creating or updating a movie.
+// Validate that year is a valid number and within a realistic range.
+function isValidMovie(movie) {
+  const { title, director, year } = movie;
   return (
-    title &&
-    director &&
+    typeof title === 'string' &&
+    typeof director === 'string' &&
     typeof year === 'number' &&
     year >= 1888 &&
     year <= new Date().getFullYear()
@@ -43,7 +45,7 @@ app.post('/movies', (req, res) => {
   }
   movie.id = movies.length + 1;
   movies.push(movie);
-  res.status(201).json(movie);
+  res.status(201).json(movie); // Use 201 Created for successful movie creation
 });
 
 // PUT
@@ -59,7 +61,7 @@ app.put('/movies/:id', (req, res) => {
 
   updated.id = id;
   movies[index] = updated;
-  res.json(updated);
+  res.json(updated); // 200 OK
 });
 
 // DELETE
