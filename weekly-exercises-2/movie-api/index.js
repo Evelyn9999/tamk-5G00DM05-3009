@@ -26,8 +26,31 @@ function isValidMovie(movie) {
 
 // GET all
 app.get('/movies', (req, res) => {
-  res.json(movies);
+  const { title, director, year } = req.query;
+  let result = [...movies];
+
+  if (title) {
+    result = result.filter(movie =>
+      movie.title.toLowerCase().includes(title.toLowerCase())
+    );
+  }
+
+  if (director) {
+    result = result.filter(movie =>
+      movie.director.toLowerCase().includes(director.toLowerCase())
+    );
+  }
+
+  if (year) {
+    const y = parseInt(year);
+    if (!isNaN(y)) {
+      result = result.filter(movie => movie.year === y);
+    }
+  }
+
+  res.json(result);
 });
+
 
 // GET by ID
 app.get('/movies/:id', (req, res) => {

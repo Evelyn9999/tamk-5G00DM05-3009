@@ -26,3 +26,57 @@ Content-Type: application/json
 
 ### Delete movie
 DELETE http://localhost:3000/movies/2
+
+
+
+### ❌ Missing year
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Missing Year",
+  "director": "Someone"
+}
+
+### ❌ Invalid year (too early)
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Ancient Movie",
+  "director": "Time Traveler",
+  "year": 1800
+}
+
+
+### ❌ PUT with missing title
+PUT http://localhost:3000/movies/1
+Content-Type: application/json
+
+{
+  "director": "Oops",
+  "year": 2020
+}
+
+### ❌ GET non-existing movie
+GET http://localhost:3000/movies/999
+
+### ❌ DELETE non-existing movie
+DELETE http://localhost:3000/movies/999
+
+### ❌ Unknown route
+GET http://localhost:3000/not-a-real-path
+
+
+### 🔍 Filter by title
+GET http://localhost:3000/movies?title=inception
+
+### 🔍 Filter by director
+GET http://localhost:3000/movies?director=joon-ho
+
+### 🔍 Filter by year
+GET http://localhost:3000/movies?year=1999
+
+### 🔍 Combine filters
+GET http://localhost:3000/movies?year=2010&director=Christopher Nolan
+
