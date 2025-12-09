@@ -1,17 +1,14 @@
 import express from "express";
 import movieRoutes from "./routes/movieRoutes.js";
+import indexRoutes from "./routes/indexRoutes.js";
 import logger from "./middleware/logger.js";
 
 const app = express();
 app.use(express.json());
 app.use(logger);
 
-// root route
-app.get("/", (req, res) => {
-    res.json({ message: "Welcome to the Movie API", endpoints: { movies: "/api/movies" } });
-});
-
-// mount router
+// mount routers
+app.use("/", indexRoutes);
 app.use("/api/movies", movieRoutes);
 
 // start
