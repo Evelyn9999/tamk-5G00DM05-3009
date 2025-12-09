@@ -3,6 +3,7 @@ import morgan from "morgan";
 import movieRoutes from "./routes/movieRoutes.js";
 import indexRoutes from "./routes/indexRoutes.js";
 import logger from "./middleware/logger.js";
+import authRoutes from "./routes/authRoutes.js";
 
 const app = express();
 
@@ -17,6 +18,7 @@ app.use(logger);
 
 // Mount routes
 app.use("/", indexRoutes);
+app.use("/auth", authRoutes);
 app.use("/api/movies", movieRoutes);
 
 const PORT = 3000;

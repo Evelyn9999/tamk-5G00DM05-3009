@@ -1,3 +1,23 @@
+### 1) Create a user (Signup)
+POST http://localhost:3000/auth/signup
+Content-Type: application/json
+
+{
+  "username": "evelyn",
+  "password": "secret123"
+}
+
+
+### 2) Login → get token
+POST http://localhost:3000/auth/login
+Content-Type: application/json
+
+{
+  "username": "evelyn",
+  "password": "secret123"
+}
+
+
 ### Get all movies
 GET http://localhost:3000/api/movies
 Accept: application/json
@@ -8,10 +28,21 @@ GET http://localhost:3000/api/movies/1
 Accept: application/json
 
 
+### 3) Create a movie (with token)
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+Authorization: Bearer <TOKEN_HERE>
+
+{
+  "title": "Avatar 2",
+  "year": 2022
+}
+
+
 ### Create a new movie (VALID)
 POST http://localhost:3000/api/movies
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "title": "Dune",
@@ -22,7 +53,7 @@ Accept: application/json
 ### Create a new movie (VALID)
 POST http://localhost:3000/api/movies
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "title": "Matrix",
@@ -33,7 +64,7 @@ Accept: application/json
 ### Create a movie (INVALID - missing title)
 POST http://localhost:3000/api/movies
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "year": 2020
@@ -43,7 +74,7 @@ Accept: application/json
 ### Create a movie (INVALID - wrong year)
 POST http://localhost:3000/api/movies
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "title": "Ancient Movie",
@@ -51,10 +82,21 @@ Accept: application/json
 }
 
 
+### 3) Update movie (with token)
+PUT http://localhost:3000/api/movies/1
+Content-Type: application/json
+Authorization: Bearer <TOKEN_HERE>
+
+{
+  "title": "Avatar 2 (Updated)",
+  "year": 2022
+}
+
+
 ### Update an existing movie (VALID)
 PUT http://localhost:3000/api/movies/1
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "title": "Interstellar (Updated)",
@@ -65,13 +107,18 @@ Accept: application/json
 ### Update an existing movie (INVALID - missing year)
 PUT http://localhost:3000/api/movies/1
 Content-Type: application/json
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
 
 {
   "title": "Interstellar Updated Wrong"
 }
 
 
+### 3) Delete movie (with token)
+DELETE http://localhost:3000/api/movies/2
+Authorization: Bearer <TOKEN_HERE>
+
+
 ### Delete a movie
 DELETE http://localhost:3000/api/movies/2
-Accept: application/json
+Authorization: Bearer <TOKEN_HERE>
