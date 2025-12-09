@@ -8,7 +8,7 @@ GET http://localhost:3000/api/movies/1
 Accept: application/json
 
 
-### Create a new movie
+### Create a new movie (VALID)
 POST http://localhost:3000/api/movies
 Content-Type: application/json
 Accept: application/json
@@ -19,7 +19,39 @@ Accept: application/json
 }
 
 
-### Update an existing movie
+### Create a new movie (VALID)
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Matrix",
+  "year": 1999
+}
+
+
+### Create a movie (INVALID - missing title)
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+Accept: application/json
+
+{
+  "year": 2020
+}
+
+
+### Create a movie (INVALID - wrong year)
+POST http://localhost:3000/api/movies
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Ancient Movie",
+  "year": 1500
+}
+
+
+### Update an existing movie (VALID)
 PUT http://localhost:3000/api/movies/1
 Content-Type: application/json
 Accept: application/json
@@ -27,6 +59,16 @@ Accept: application/json
 {
   "title": "Interstellar (Updated)",
   "year": 2014
+}
+
+
+### Update an existing movie (INVALID - missing year)
+PUT http://localhost:3000/api/movies/1
+Content-Type: application/json
+Accept: application/json
+
+{
+  "title": "Interstellar Updated Wrong"
 }
 
 

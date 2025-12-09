@@ -1,5 +1,12 @@
 import { movies, getNextMovieId } from "../config/db.js";
 import { Movie } from "../models/movieModel.js";
+import Joi from "joi";
+
+// Joi schema for validation (controller-level)
+const movieSchema = Joi.object({
+    title: Joi.string().min(1).max(100).required(),
+    year: Joi.number().integer().min(1888).max(2100).required()
+});
 
 export const getAllMovies = (req, res) => {
     res.json(movies);
@@ -15,7 +22,19 @@ export const getMovieById = (req, res) => {
 };
 
 export const createMovie = (req, res) => {
-    const { title, year } = req.body;
+    // Controller-level validation with Joi
+    const { error, value } = movieSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+        const details = error.details.map(d => d.message);
+        return res.status(400).json({
+            error: "Validation failed",
+            details
+        });
+    }
+
+    // Use validated value
+    const { title, year } = value;
     const newMovie = new Movie(getNextMovieId(), title, year);
 
     movies.push(newMovie);
@@ -28,8 +47,20 @@ export const updateMovie = (req, res) => {
 
     if (!movie) return res.status(404).json({ error: "Movie not found" });
 
-    movie.title = req.body.title;
-    movie.year = req.body.year;
+    // Controller-level validation with Joi
+    const { error, value } = movieSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+        const details = error.details.map(d => d.message);
+        return res.status(400).json({
+            error: "Validation failed",
+            details
+        });
+    }
+
+    // Use validated value
+    movie.title = value.title;
+    movie.year = value.year;
     res.json(movie);
 };
 
