@@ -1,0 +1,90 @@
+### RBAC Demo API Tests
+
+### ============================================
+### PUBLIC ENDPOINTS
+### ============================================
+
+### Root endpoint (public)
+GET http://localhost:3000/
+
+### ============================================
+### AUTHENTICATION
+### ============================================
+
+### Login as admin
+### Expected: 200 OK with token
+### Copy the token from response and use it in admin-only endpoints
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "password": "admin123"
+}
+
+### Login as regular user
+### Expected: 200 OK with token
+### Copy the token from response and use it in user endpoints
+POST http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username": "john",
+  "password": "user123"
+}
+
+### ============================================
+### AUTHENTICATED ENDPOINTS (USER OR ADMIN)
+### ============================================
+
+### Get movies (requires authentication)
+### Expected: 200 OK with movie list
+### Replace YOUR_TOKEN_HERE with token from login
+GET http://localhost:3000/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTI4OTg2NSwiZXhwIjoxNzY1MjkzNDY1fQ.odUPOrC62PiCCZ8tqCdIbW3MdqCpJFLEG635l0hbiZg
+
+### ============================================
+### ADMIN ONLY ENDPOINTS
+### ============================================
+
+### Add movie (admin only)
+### Expected: 200 OK if admin token, 403 Forbidden if user token
+### Replace YOUR_ADMIN_TOKEN with token from admin login
+POST http://localhost:3000/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTI4OTg2NSwiZXhwIjoxNzY1MjkzNDY1fQ.odUPOrC62PiCCZ8tqCdIbW3MdqCpJFLEG635l0hbiZg
+Content-Type: application/json
+
+{
+  "title": "New Movie"
+}
+
+### Delete movie (admin only)
+### Expected: 200 OK if admin token, 403 Forbidden if user token
+### Replace YOUR_ADMIN_TOKEN with token from admin login
+DELETE http://localhost:3000/movies/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc2NTI4OTg2NSwiZXhwIjoxNzY1MjkzNDY1fQ.odUPOrC62PiCCZ8tqCdIbW3MdqCpJFLEG635l0hbiZg
+
+### ============================================
+### ERROR TESTING
+### ============================================
+
+### Test without token (should fail with 401)
+### Expected: 401 Unauthorized with "no token" error
+GET http://localhost:3000/movies
+
+### Test with invalid token (should fail with 403)
+### Expected: 403 Forbidden with "invalid token" error
+GET http://localhost:3000/movies
+Authorization: Bearer invalid_token_here
+
+### Test admin endpoint with user token (should fail with 403)
+### Expected: 403 Forbidden with "admin only" error
+### Replace YOUR_USER_TOKEN with token from regular user login
+POST http://localhost:3000/movies
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwidXNlcm5hbWUiOiJqb2huIiwicm9sZSI6InVzZXIiLCJpYXQiOjE3NjUyODk5NDQsImV4cCI6MTc2NTI5MzU0NH0.jDFcPEKgHHnOv579zQi5xDs1csgVOyDv4lD45UV7VMI
+Content-Type: application/json
+
+{
+  "title": "New Movie"
+}
+
