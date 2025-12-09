@@ -1,0 +1,30 @@
+### Get all movies
+GET http://localhost:3000/movies
+Accept: application/json
+
+### Get a movie by ID
+GET http://localhost:3000/movies/1
+Accept: application/json
+
+### Add a new movie
+POST http://localhost:3000/movies
+Content-Type: application/json
+
+{
+  "title": "Spirited Away",
+  "director": "Hayao Miyazaki",
+  "year": 2001
+}
+
+### Update a movie
+PUT http://localhost:3000/movies/6926fbeeb97b9a5fa3765e33
+Content-Type: application/json
+
+{
+  "title": "The Matrix Reloaded",
+  "director": "The Wachowskis",
+  "year": 2003
+}
+
+### Delete a movie
+DELETE http://localhost:3000/movies/69271aee6753fbe5c7158175
