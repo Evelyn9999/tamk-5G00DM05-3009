@@ -17,13 +17,13 @@ Content-Type: application/json
   "password": "secret123"
 }
 
-### Use token here (replace XXX)
+### Use token here
 GET http://localhost:4000/items
-Authorization: Bearer XXX
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Mzk0NWI3NDk0ZTQ5YjU3MzliYjhkNyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjUzNjEwOTEsImV4cCI6MTc2NTM2NDY5MX0.0YN0xrE9Kdmyd52sOHU9wcwbxt6AinvFA--70t2yhDw
 
 ### Create event (admin only)
 POST http://localhost:4000/items
-Authorization: Bearer XXX
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY5Mzk0NWI3NDk0ZTQ5YjU3MzliYjhkNyIsInVzZXJuYW1lIjoiYWRtaW4iLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NjUzNjEwOTEsImV4cCI6MTc2NTM2NDY5MX0.0YN0xrE9Kdmyd52sOHU9wcwbxt6AinvFA--70t2yhDw
 Content-Type: application/json
 
 {
